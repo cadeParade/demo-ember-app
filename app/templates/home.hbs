@@ -1,0 +1,4 @@
+{{#each this.model as |user|}}
+{{user.name}}{{#each user.recentEmojis as |emoji|}}{{emoji.emoji}}{{/each}}<br>
+{{/each}}
+{{outlet}}
