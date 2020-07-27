@@ -1,11 +1,18 @@
 export default function() {
-  this.get("/users", (schema, request) => {
-    const x = schema.users.all();
-    console.log("x", x);
-    return x;
+  this.get("/users", (schema) => {
+    return schema.users.all();
   });
 
-  this.get("/emojis/:id", (schema, request) => {
-    return schema.emojis.find(request.params.id);
+  this.get("/users/:id", (schema, request) => {
+    return schema.users.find(request.params.id);
+  });
+
+  this.get("/posts", (schema) => {
+    return schema.posts.all();
+  });
+
+  this.get("/recent-emojis", (schema, request) => {
+    const user = schema.users.find(request.queryParams.user_id);
+    return user.recentEmojis;
   });
 }
