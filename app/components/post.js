@@ -11,7 +11,7 @@ export default class PostComponent extends Component {
 
   @action
   getRecentEmojis() {
-    console.log("hi??");
-    this.currentUser.get("recentEmojis");
+    console.log("triggering recent emoji fetch??");
+    this.currentUser.recentEmojis;
   }
 }

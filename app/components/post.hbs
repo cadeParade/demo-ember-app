@@ -5,7 +5,5 @@
   {{@post.body}}
 </p>
 <div class="post-footer">
-  <button class="react-button">React</button>
+  <button {{on "click" this.getRecentEmojis}} class="react-button">React</button>
 </div>
-<div {{on "click" this.getRecentEmojis}} style="height: 25px; width: 25px; background-color: blue;"></div>
-<br><br>
