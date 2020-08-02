@@ -2,8 +2,9 @@
   <h1 class="post-header">{{@post.name}}</h1>
 </div>
 <p class="py-6 text-base">
-  {{@post.body}}
+  {{@post.blurb}} <LinkTo @route={{'posts.post'}} @model={{@post.id}}>... [Read more]</LinkTo>
 </p>
 <div class="post-footer">
+  <button>{{@post.comments.length}}</button>
   <button {{on "click" this.getRecentEmojis}} class="react-button">React</button>
 </div>

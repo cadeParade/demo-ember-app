@@ -1,56 +1,71 @@
-'use strict';
+var prettierConfig = require('./.prettierrc.js');
 
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2017,
     sourceType: 'module',
     ecmaFeatures: {
-      legacyDecorators: true
-    }
+      legacyDecorators: true,
+    },
   },
-  plugins: [
-    'ember'
-  ],
-  extends: [
-    'eslint:recommended',
-    'plugin:ember/recommended'
-  ],
   env: {
-    browser: true
+    browser: true,
+    es6: true,
   },
+  plugins: ['prettier'],
+  extends: ['prettier', 'eslint:recommended', 'plugin:ember/recommended'],
+  parser: 'babel-eslint',
   rules: {
-    'ember/no-jquery': 'error'
+    'prettier/prettier': ['error', {
+  printWidth: 100,
+  singleQuote: true,
+  trailingComma: "all",
+  bracketSpacing: false,
+  parser: "babel",
+  arrowParens: "avoid",
+  bracketSpacing: false,
+}],
+    'brace-style': ['error', '1tbs', {allowSingleLine: false}],
+    'max-len': ['error', 100],
+    'object-curly-spacing': ['error', 'never'],
+    quotes: ['error', 'single', {avoidEscape: true}],
+    'keyword-spacing': ['error', {before: true}],
+    'space-in-parens': ['error', 'never'],
+    semi: ['error', 'always'],
+    'space-unary-ops': ['error', {nonwords: false}],
+    'comma-dangle': ['error', 'always-multiline'],
+    'no-unused-expressions': ['error', {allowTernary: true}],
+    'ember/no-new-mixins': 'off',
+    'ember/classic-decorator-hooks': 'error',
+    'ember/classic-decorator-no-classic-methods': 'error',
+
+    'ember/no-mixins': 'off',
+    'ember/no-jquery': 'off',
   },
   overrides: [
-    // node files
     {
+      // chai uses some expressions like `to.be.ok` which are valid syntax
+      // but get caught by this rule.
+      files: '*-test.js',
+      rules: {
+        'no-unused-expressions': 'off',
+      },
+    },
+    {
+      files: ['mirage/**'],
+    },
+    {
+      // node files
       files: [
-        '.eslintrc.js',
         '.template-lintrc.js',
         'ember-cli-build.js',
+        'tailwind.config.js',
         'testem.js',
         'blueprints/*/index.js',
         'config/**/*.js',
         'lib/*/index.js',
-        'server/**/*.js'
       ],
-      parserOptions: {
-        sourceType: 'script'
-      },
-      env: {
-        browser: false,
-        node: true
-      },
-      plugins: ['node'],
-      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
-        // add your custom rules and overrides for node files here
-
-        // this can be removed once the following is fixed
-        // https://github.com/mysticatea/eslint-plugin-node/issues/77
-        'node/no-unpublished-require': 'off'
-      })
-    }
-  ]
+    },
+  ],
 };
