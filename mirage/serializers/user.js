@@ -4,7 +4,8 @@ export default JSONAPISerializer.extend({
   links(user) {
     return {
       recentEmojis: {
-        related: `/recent-emojis?user_id=${user.id}`,
+        related: `recent-emojis`,
+        // related: `/recent-emojis?user_id=${user.id}`,
       },
     };
   },
