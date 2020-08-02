@@ -1,10 +1,20 @@
 import Route from '@ember/routing/route';
-import {hash} from 'rsvp';
+import {task} from 'ember-concurrency';
 
 export default class PostsPostRoute extends Route {
   model(params) {
-    const post = this.store.findRecord('post', params.post_id, {include: 'author'});
-    const comments = this.store.query('comment', {post_id: params.post_id, include: 'author'});
-    return hash({post, comments});
+    return this.store.findRecord('post', params.post_id, {include: 'author'});
   }
+
+  setupController(controller, post) {
+    controller.setProperties({
+      model: post,
+      comments: this.fetchComments.perform(post),
+    });
+  }
+
+  @task(function* (post) {
+    return yield this.store.query('comment', {post_id: post.id, include: 'author'});
+  })
+  fetchComments;
 }
