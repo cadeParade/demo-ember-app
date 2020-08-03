@@ -26,7 +26,7 @@ export default function () {
     return user.recentEmojis;
   });
 
-  this.get("comments", (schema, request) => {
+  this.get('comments', (schema, request) => {
     const post = schema.posts.find(request.queryParams.post_id);
     return post.comments;
   });

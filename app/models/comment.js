@@ -1,11 +1,11 @@
-import Model, { attr, belongsTo } from "@ember-data/model";
+import Model, {attr, belongsTo} from '@ember-data/model';
 
 export default class CommentModel extends Model {
   @attr body;
 
-  @belongsTo("user")
+  @belongsTo('user')
   author;
 
-  @belongsTo("post")
+  @belongsTo('post')
   post;
 }
