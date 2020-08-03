@@ -19,7 +19,7 @@
 <div class="pt-12">
   <h3>Comments</h3>
   {{#if this.comments.isRunning}}
-    Loading comments...
+    <span data-test-comments-loading>Loading comments...</span>
   {{else}}
     <div data-test-post-comments>
       {{#each this.model.comments as |comment|}}
