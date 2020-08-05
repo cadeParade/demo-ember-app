@@ -8,7 +8,7 @@ export default class PostsPostRoute extends Route {
 
   setupController(controller, post) {
     controller.setProperties({
-      model: post,
+      post,
       comments: this.fetchComments.perform(post),
     });
   }
