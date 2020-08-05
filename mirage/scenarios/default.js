@@ -1,8 +1,7 @@
 import _ from 'lodash';
 
 export default function (server) {
-  const emojis = createEmoji(server);
-  createUsers(server, 10, emojis);
+  createUsers(server, 10);
   createPosts(server, 10);
 }
 
@@ -38,5 +37,5 @@ function createEmoji(server) {
 }
 
 function createUsers(server, count, emojis) {
-  return server.createList('user', count, {recentEmojis: _.sampleSize(emojis, 5)});
+  return server.createList('user', count);
 }
