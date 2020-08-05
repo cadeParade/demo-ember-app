@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   let ENV = {
-    modulePrefix: "comment-app",
+    modulePrefix: "ember-playground",
     environment,
     rootURL: "/",
     locationType: "auto",
