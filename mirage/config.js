@@ -1,4 +1,8 @@
+import faker from 'faker';
+
 export default function () {
+  faker.seed(1230);
+
   this.logging = true;
   this.get('/users', schema => {
     return schema.users.all();
