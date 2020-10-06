@@ -1,22 +1,22 @@
-import classic from 'ember-classic-decorator';
-import { inject as service } from '@ember/service';
+import {inject as service} from '@ember/service';
 import Component from '@ember/component';
 import {task} from 'ember-concurrency';
+import {tracked} from '@glimmer/tracking';
 
-@classic
 export default class Comments extends Component {
   @service
   store;
 
   post = null;
+  @tracked comments;
 
-  init() {
-    super.init(...arguments);
-    this.set('comments', []);
+  constructor() {
+    super(...arguments);
+    this.comments = [];
   }
 
   didInsertElement() {
-    this.fetchComments.perform(this.get('post'));
+    this.fetchComments.perform(this.post);
   }
 
   // didUpdateAttrs() {
@@ -24,11 +24,11 @@ export default class Comments extends Component {
   // }
 
   @task(function* (post) {
-    const comments = yield this.get('store').query('comment', {
+    const comments = yield this.store.query('comment', {
       post_id: post.id,
       include: 'author',
     });
-    this.set('comments', comments);
+    this.comments = comments;
   })
   fetchComments;
 }
