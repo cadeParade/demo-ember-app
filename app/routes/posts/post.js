@@ -1,5 +1,4 @@
 import Route from '@ember/routing/route';
-import {task} from 'ember-concurrency';
 
 export default class PostsPostRoute extends Route {
   model(params) {
@@ -9,12 +8,7 @@ export default class PostsPostRoute extends Route {
   setupController(controller, post) {
     controller.setProperties({
       post,
-      comments: this.fetchComments.perform(post),
+      // comments: this.fetchComments.perform(post),
     });
   }
-
-  @task(function* (post) {
-    return yield this.store.query('comment', {post_id: post.id, include: 'author'});
-  })
-  fetchComments;
 }

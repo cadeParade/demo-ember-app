@@ -1,0 +1,11 @@
+{{#if fetchComments.isRunning}}
+  <span data-test-comments-loading>
+    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+  </span>
+{{else}}
+  <div data-test-post-comments>
+    {{#each comments as |comment|}}
+      <Comment @comment={{comment}}/>
+    {{/each}}
+  </div>
+{{/if}}

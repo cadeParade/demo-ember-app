@@ -1,11 +1,9 @@
-import Model, {attr, belongsTo} from '@ember-data/model';
+import DS from 'ember-data';
+import Commentable from 'ember-playground/mixins/commentable';
 
-export default class CommentModel extends Model {
-  @attr body;
+export default DS.Model.extend(Commentable, {
+  body: DS.attr(),
 
-  @belongsTo('user')
-  author;
-
-  @belongsTo('post')
-  post;
-}
+  author: DS.belongsTo('user'),
+  post: DS.belongsTo('post'),
+});
