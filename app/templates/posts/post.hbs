@@ -20,15 +20,7 @@
 
 <div class="pt-12">
   <h3>Comments</h3>
-  {{#if this.comments.isRunning}}
-    <span data-test-comments-loading>
-      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-    </span>
-  {{else}}
-    <div data-test-post-comments>
-      {{#each this.post.comments as |comment|}}
-        <Comment @comment={{comment}}/>
-      {{/each}}
-    </div>
-  {{/if}}
+  <Comments
+    @post={{this.post}}
+  />
 </div>
