@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import {task} from 'ember-concurrency';
 import {inject as service} from '@ember/service';
 import {computed} from '@ember/object';
-import {gt} from '@ember/object/computed';
+import {readOnly, gt} from '@ember/object/computed';
 
 export default Component.extend({
   tagName: 'section',
@@ -16,7 +16,7 @@ export default Component.extend({
     this.set('comments', []);
   },
 
-  commentCount: countItems('comments'),
+  commentCount: readOnly('comments.length'),
 
   isTooManyComments: gt('commentCount', 5),
 
@@ -51,11 +51,3 @@ export default Component.extend({
     this.set('comments', comments);
   }),
 });
-
-export function countItems(keyName) {
-  return computed(keyName, function () {
-    return this.get(keyName).filter(item => {
-      return !!item;
-    }).length;
-  });
-}
