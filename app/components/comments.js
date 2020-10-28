@@ -1,24 +1,18 @@
-import classic from 'ember-classic-decorator';
 import {tagName} from '@ember-decorators/component';
 import {action, computed} from '@ember/object';
 import {inject as service} from '@ember/service';
 import {gt, readOnly} from '@ember/object/computed';
 import Component from '@ember/component';
 import {task} from 'ember-concurrency';
+import {tracked} from '@glimmer/tracking';
 
-@classic
 @tagName('section')
 export default class Comments extends Component {
   @service
   store;
 
-  post = null;
-  isShowMoreExpanded = false;
-
-  init() {
-    super.init(...arguments);
-    this.set('comments', []);
-  }
+  @tracked isShowMoreExpanded = false;
+  @tracked comments = [];
 
   @readOnly('comments.length')
   commentCount;
@@ -43,19 +37,19 @@ export default class Comments extends Component {
 
   @action
   expandComments() {
-    this.set('isShowMoreExpanded', true);
+    this.isShowMoreExpanded = true;
   }
 
   didInsertElement() {
-    this.fetchComments.perform(this.get('post'));
+    this.fetchComments.perform(this.post);
   }
 
   @task(function* (post) {
-    const comments = yield this.get('store').query('comment', {
+    const comments = yield this.store.query('comment', {
       post_id: post.id,
       include: 'author',
     });
-    this.set('comments', comments);
+    this.comments = comments;
   })
   fetchComments;
 }
