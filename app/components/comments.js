@@ -1,53 +1,61 @@
+import classic from 'ember-classic-decorator';
+import {tagName} from '@ember-decorators/component';
+import {action, computed} from '@ember/object';
+import {inject as service} from '@ember/service';
+import {gt, readOnly} from '@ember/object/computed';
 import Component from '@ember/component';
 import {task} from 'ember-concurrency';
-import {inject as service} from '@ember/service';
-import {computed} from '@ember/object';
-import {readOnly, gt} from '@ember/object/computed';
 
-export default Component.extend({
-  tagName: 'section',
-  store: service(),
+@classic
+@tagName('section')
+export default class Comments extends Component {
+  @service
+  store;
 
-  post: null,
-  isShowMoreExpanded: false,
+  post = null;
+  isShowMoreExpanded = false;
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
     this.set('comments', []);
-  },
+  }
 
-  commentCount: readOnly('comments.length'),
+  @readOnly('comments.length')
+  commentCount;
 
-  isTooManyComments: gt('commentCount', 5),
+  @gt('commentCount', 5)
+  isTooManyComments;
 
-  shouldShowExpandCommentOption: computed('isTooManyComments', 'isShowMoreExpanded', function () {
+  @computed('isTooManyComments', 'isShowMoreExpanded')
+  get shouldShowExpandCommentOption() {
     if (this.isTooManyComments && !this.isShowMoreExpanded) return true;
     return false;
-  }),
+  }
 
-  slicedComments: computed('isTooManyComments', 'isShowMoreExpanded', function () {
+  @computed('isTooManyComments', 'isShowMoreExpanded')
+  get slicedComments() {
     if (this.isTooManyComments && !this.isShowMoreExpanded) {
       return this.comments.slice(0, 5);
     } else {
       return this.comments;
     }
-  }),
+  }
 
-  actions: {
-    expandComments() {
-      this.set('isShowMoreExpanded', true);
-    },
-  },
+  @action
+  expandComments() {
+    this.set('isShowMoreExpanded', true);
+  }
 
   didInsertElement() {
     this.fetchComments.perform(this.get('post'));
-  },
+  }
 
-  fetchComments: task(function* (post) {
+  @task(function* (post) {
     const comments = yield this.get('store').query('comment', {
       post_id: post.id,
       include: 'author',
     });
     this.set('comments', comments);
-  }),
-});
+  })
+  fetchComments;
+}
