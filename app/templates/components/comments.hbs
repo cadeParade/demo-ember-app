@@ -1,9 +1,9 @@
-{{#if fetchComments.isRunning}}
-  <span data-test-comments-loading>
-    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-  </span>
-{{else}}
-  <div data-test-post-comments>
+<section {{did-insert (perform fetchComments @post)}}>
+  {{#if fetchComments.isRunning}}
+    <span data-test-comments-loading>
+      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </span>
+  {{else}}
     {{#if allowNewComments}}
       <NewComment @currentUser={{@currentUser}} />
     {{/if}}
@@ -18,5 +18,5 @@
         Show more comments
       </button>
     {{/if}}
-  </div>
-{{/if}}
+  {{/if}}
+</section>

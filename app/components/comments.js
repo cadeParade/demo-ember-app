@@ -1,12 +1,10 @@
-import {tagName} from '@ember-decorators/component';
 import {action, computed} from '@ember/object';
 import {inject as service} from '@ember/service';
 import {gt, readOnly} from '@ember/object/computed';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import {task} from 'ember-concurrency';
 import {tracked} from '@glimmer/tracking';
 
-@tagName('section')
 export default class Comments extends Component {
   @service
   store;
@@ -39,10 +37,6 @@ export default class Comments extends Component {
   @action
   expandComments() {
     this.isShowMoreExpanded = true;
-  }
-
-  didInsertElement() {
-    this.fetchComments.perform(this.post);
   }
 
   @task(function* (post) {
