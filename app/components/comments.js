@@ -11,7 +11,10 @@ export default class Comments extends Component {
 
   @tracked isShowMoreExpanded = false;
   @tracked comments = [];
-  @tracked allowNewComments = false;
+
+  get allowNewComments() {
+    return this.args.allowNewComments || false;
+  }
 
   @readOnly('comments.length')
   commentCount;
