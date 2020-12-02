@@ -88,3 +88,14 @@
     transform: translate(24px, 0);
   }
 }
+
+.expand-comments-button {
+  @apply font-sans;
+  @apply bg-transparent;
+  @apply border;
+  @apply text-xs;
+  @apply font-bold;
+  @apply py-2;
+  @apply px-4;
+  @apply rounded-full;
+}

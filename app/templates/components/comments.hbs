@@ -4,12 +4,15 @@
   </span>
 {{else}}
   <div data-test-post-comments>
+    {{#if allowNewComments}}
+      <NewComment @currentUser={{@currentUser}} />
+    {{/if}}
     {{#each slicedComments as |comment|}}
       <Comment @comment={{comment}}/>
     {{/each}}
     {{#if shouldShowExpandCommentOption}}
       <button
-        class="font-sans bg-transparent border border-gray-500 hover:border-teal-500 text-xs text-gray-500 hover:text-teal-500 font-bold py-2 px-4 rounded-full"
+        class="expand-comments-button border-gray-500 text-gray-500 hover:border-teal-500 hover:text-teal-500"
         {{action "expandComments"}}
       >
         Show more comments
