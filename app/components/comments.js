@@ -1,13 +1,11 @@
-import {action, computed} from '@ember/object';
+import {action} from '@ember/object';
 import {inject as service} from '@ember/service';
-import {gt, readOnly} from '@ember/object/computed';
 import Component from '@glimmer/component';
 import {task} from 'ember-concurrency';
 import {tracked} from '@glimmer/tracking';
 
 export default class Comments extends Component {
-  @service
-  store;
+  @service store;
 
   @tracked isShowMoreExpanded = false;
   @tracked comments = [];
@@ -16,19 +14,19 @@ export default class Comments extends Component {
     return this.args.allowNewComments || false;
   }
 
-  @readOnly('comments.length')
-  commentCount;
+  get commentCount() {
+    return this.comments.length;
+  }
 
-  @gt('commentCount', 5)
-  isTooManyComments;
+  get isTooManyComments() {
+    return this.commentCount > 5;
+  }
 
-  @computed('isTooManyComments', 'isShowMoreExpanded')
   get shouldShowExpandCommentOption() {
     if (this.isTooManyComments && !this.isShowMoreExpanded) return true;
     return false;
   }
 
-  @computed('isTooManyComments', 'isShowMoreExpanded')
   get slicedComments() {
     if (this.isTooManyComments && !this.isShowMoreExpanded) {
       return this.comments.slice(0, 5);
@@ -37,8 +35,7 @@ export default class Comments extends Component {
     }
   }
 
-  @action
-  expandComments() {
+  @action expandComments() {
     this.isShowMoreExpanded = true;
   }
 
