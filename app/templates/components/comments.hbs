@@ -1,16 +1,16 @@
-{{#if fetchComments.isRunning}}
-  <span data-test-comments-loading>
-    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-  </span>
-{{else}}
-  <div data-test-post-comments>
-    {{#if allowNewComments}}
+<section {{did-insert (perform this.fetchComments @post)}}>
+  {{#if this.fetchComments.isRunning}}
+    <span data-test-comments-loading>
+      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </span>
+  {{else}}
+    {{#if this.allowNewComments}}
       <NewComment @currentUser={{@currentUser}} />
     {{/if}}
-    {{#each slicedComments as |comment|}}
+    {{#each this.slicedComments as |comment|}}
       <Comment @comment={{comment}}/>
     {{/each}}
-    {{#if shouldShowExpandCommentOption}}
+    {{#if this.shouldShowExpandCommentOption}}
       <button
         class="expand-comments-button border-gray-500 text-gray-500 hover:border-teal-500 hover:text-teal-500"
         {{action "expandComments"}}
@@ -18,5 +18,5 @@
         Show more comments
       </button>
     {{/if}}
-  </div>
-{{/if}}
+  {{/if}}
+</section>
