@@ -8,6 +8,6 @@ export default Factory.extend({
   author: association(),
 
   afterCreate(post, server) {
-    server.createList('comment', 5, {post});
+    server.createList('comment', 8, {post});
   },
 });
